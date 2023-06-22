@@ -9,15 +9,76 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="https://kit.fontawesome.com/44d3f60ba9.js" crossorigin="anonymous"></script>
 </head>
+<!--BANNIERE D'EDITION-->
+<div class="banniere-editer" style="display:n ;">
+	<div class="mode-edition">
+		<i class="fa-regular fa-pen-to-square"></i>
+		<span>Mode édition</span>
+	</div>
+
+	<button>publier les changements</button>
+</div>
 <body>
+	<!--MODALE SUPPRESSION DE LA GALERIE-->
+	<aside id="modale1" class="modale" aria-hidden="true" role="dialog" aria-modal="false" style="display: n">
+		<div class="container-modale">
+			<i class="croix-quitter fa-solid fa-xmark"></i>
+			<h3 id="titre-modale">Galerie photo</h3>
+			<div class="galerie-modale">
+			</div>
+			<div class="partie-suppression">
+				<input href="#modale-form" class="modale-form-js" type="submit" value="Ajouter une photo">
+				<span class="supprimer-galerie">Supprimer la galerie</span>
+			</div>
+		</div>
+	</aside>
+<!--DEUXIEME MODALE D'AJOUT DE FICHIER-->	
+	<aside id="modale-form" class="modale" aria-hidden="true" role="dialog" aria-modal="false" style="display: none;">
+		<div class="container-modale">
+			<i class="croix-quitter fa-solid fa-xmark"></i>
+			<i class="fa-solid fa-arrow-left retour"></i>
+			<h3 id="titre-modale">Ajout photo</h3>
+			<span class="message-erreur"></span>
+			<div class="contenant-modale">
+				<div class="container-img-modale">
+					<figure class="image-container">
+						<img id="selection-image" src="" alt="">
+					</figure>
+					<label for="upload-button" class="choix-fichier">
+						<i class="img-icon fa-regular fa-image"></i>
+						<span class="bouton-telecharger-btn">+ Ajouter photo</span>
+						<span>jpg, png : 4mo max</span>
+					</label>
+					<input id="upload-button" class="bouton-telecharger" type="file">
+				</div>
+
+				<form id="soumettre-photo" action="#" method="post">
+					<label for="name">Nom</label>
+					<input type="text" name="name" id="name">
+					<label for="categorie">Catégorie</label>
+					<select type="categorie" name="format" id="category">
+						<option selected disabled value=""></option>
+						<option data-btn="3" value="Hôtels & restaurants">Hôtels & restaurants</option>
+						<option data-btn="1" value="Objets">Objets</option>
+						<option data-btn="2" value="Appartements">Appartements</option>
+					</select>
+					<input type="submit" value="Valider">
+				</form>
+			</div>
+		</div>
+	</aside>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+
+
+	<!--NAVIGATION-->
 	<nav>
 		<ul>
-			<li>projets</li>
+			<li id="projets">projets</li>
 			<li>contact</li>
-			<li>login</li>
+			<li><a class="bouton-login" href="./pages/login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -28,6 +89,10 @@
 			<img src="./assets/images/sophie-bluel.png" alt="">
 		</figure>
 		<article>
+			<!-- <a class="modal__link edit_activation" href="">
+				<i href="" class=" fa-regular fa-pen-to-square"></i>
+				<span href="" class="">modifier</span>
+			</a> -->
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
@@ -35,52 +100,25 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="btn-modifier-acces-modale">
+			<h2>Mes Projets</h2>
+		<!--GALERIE D'IMAGES-->
+			<!--bouton modifier mes projets-->
+			<a class="lien-modale" href="#modale1" style="display: n;">
+				<i href="#modale1" class=" js-modal fa-regular fa-pen-to-square"></i>
+				<span href="#modale1" class="js-modal">modifier</span>
+			</a>
+		</div>
+
+		<!--filtres-->
+		<div class="boutons-filtrer">
+			<button class="btn-clique" type="button">Tous</button>
+			<button type="button" data-btn="1">Objets</button>
+			<button type="button" data-btn="2">Appartements</button>
+			<button type="button" data-btn="3">Hôtels & restaurants</button>
+		</div>
+		<!--conteneur galerie pour l'api-->
 		<div class="gallery">
-			<figure>
-				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-				<figcaption>Abajour Tahina</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-v.png" alt="Appartement Paris V">
-				<figcaption>Appartement Paris V</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/restaurant-sushisen-londres.png" alt="Restaurant Sushisen - Londres">
-				<figcaption>Restaurant Sushisen - Londres</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/la-balisiere.png" alt="Villa “La Balisiere” - Port Louis">
-				<figcaption>Villa “La Balisiere” - Port Louis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/structures-thermopolis.png" alt="Structures Thermopolis">
-				<figcaption>Structures Thermopolis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-x.png" alt="Appartement Paris X">
-				<figcaption>Appartement Paris X</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/le-coteau-cassis.png" alt="Pavillon “Le coteau” - Cassis">
-				<figcaption>Pavillon “Le coteau” - Cassis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/villa-ferneze.png" alt="Villa Ferneze - Isola d’Elba">
-				<figcaption>Villa Ferneze - Isola d’Elba</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-xviii.png" alt="Appartement Paris XVIII">
-				<figcaption>Appartement Paris XVIII</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/bar-lullaby-paris.png" alt="Bar “Lullaby” - Paris">
-				<figcaption>Bar “Lullaby” - Paris</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
-				<figcaption>Hotel First Arte - New Delhi</figcaption>
-			</figure>
 		</div>
 	</section>
 	<section id="contact">
