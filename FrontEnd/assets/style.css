@@ -95,7 +95,15 @@ nav li {
 	font-size: 1.2em;
 }
 
+li img {
+	margin-top: 5px;
+	width: 20px;
+}
 li:hover {
+	color: #B1663C;
+	cursor: pointer;
+}
+.login__btn:hover {
 	color: #B1663C;
 }
 #introduction {
@@ -127,10 +135,18 @@ li:hover {
 }
 .gallery {
 	width: 100%;
-	display: grid;
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 20px;
+	row-gap: 20px;
+	/* display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+	grid-row-gap: 20px; */
+}
+
+.gallery figure {
+	width: 30%;
 }
 
 .gallery img {
@@ -177,12 +193,246 @@ input[type="submit"]{
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 60px;
+	border: none;
+	cursor: pointer;
 }
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
+/*****BANNIERE EDITION*****/
+
+/* Edition mode */
+
+.banniere-editer { 
+	display: flex;
+    width: 100%;
+    height: 60px;
+    background-color: black;
+    gap: 20px;
+	align-items: center;
+    justify-content: center;
+}
+
+.banniere-editer i { 
+    color: white;
+}
+.banniere-editer span { 
+    font-family: 'Work Sans';
+    font-weight: 400;
+    font-size: 16px;
+    color: white;
+}
+
+.mode-edition { 
+    cursor: pointer;
+}
+
+.banniere-editer button { 
+    color: black;
+    font-family: 'Work Sans';
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    border-radius: 60px;
+    padding: 10px 20px;
+	background-color: white;
+}
+
+/*****MODALE SUPPRESSION GALERIE*****/
+
+/* ------ modals ------ */
+
+.lien-modale { 
+    text-decoration: none; 
+    color: black;
+    cursor: pointer;
+}
+
+#modale1 , #modale-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-modale {
+    width: 25%;
+    padding: 2.5rem 6.25rem;
+    background-color: white;
+    position: relative;
+    border-radius: 10px;
+}
+
+.modale h3 {
+    text-align: center;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 26px;
+    margin:3rem 0;
+}
+
+.croix-quitter {
+    cursor: pointer;
+    position: absolute;
+    right: 2.5rem;
+    top: 2rem;
+    font-size: 1.5em;
+}
+
+.retour {     /*pas de reaction*/
+    position: absolute;
+    left: 2.5rem;
+    top: 2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.galerie-modale {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-left: 0.5rem;
+    gap: 6px;
+    margin-bottom: 2rem;
+    padding-bottom: 4rem;
+    height: 400px;
+}
+
+.galerie-modale::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #B3B3B3;
+}
+
+
+.partie-suppression {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.partie-suppression input {
+    cursor: pointer;
+    margin: 1rem;
+    padding: 0.5rem 0;
+    font-size: 15px;
+    width: 237px;
+    border: none;
+    text-decoration: none;
+}
+
+.supprimer-galerie {
+    cursor: pointer;
+    font-family: 'Syne';
+    font-weight: 400;
+    font-size: 14px;
+    color: #D65353;
+}
+
+.contenant-modale {
+    position: relative;
+}
+
+.contenant-modale::before {
+    content: "";
+    position: absolute;
+    bottom: 80px;
+    width: 100%;
+    height: 1px;
+    background-color: #B3B3B3;
+}
+
+.container-img-modale {
+	display: flex;
+    position: relative;
+    background-color: #E8F1F7;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px ;
+    
+}
+
+#selection-image {
+    position: relative;
+    object-fit: cover;
+    object-position: center;
+    min-height: 209px;
+    max-height: 210px;
+    max-width: 192px;
+}
+
+.img-icon {
+    color:#B9C5CC;
+    font-size: 4rem;
+}
+
+
+.contenant-modale {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 2rem 0;
+}
+.contenant-modale input, select {
+    height: 50px;
+    font-size: 1.2em;
+    border: none;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    margin-bottom: 1rem;
+}
+
+.contenant-modale select {
+    appearance: none;
+}
+.contenant-modale select::after {
+    content: '/25BC' ;
+}
+
+.choix-fichier {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+}
+
+.bouton-telecharger-btn {
+    background-color: #CBD6DC;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Work Sans';
+    font-weight: 500;
+    color: #306685;
+    font-size: 1rem;
+    padding: 0.5rem 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 10px;
+}
+
+
+.bouton-login {
+    text-decoration: none;
+    color: black;
+}
