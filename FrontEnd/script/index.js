@@ -58,7 +58,7 @@ function activerFiltre() {
 
 // -----------------------------------------------------------------------------------------------
 
-// ------- Affiche les photo dans la gallerie ------------------------------
+// ------- Affiche les photos dans la gallerie ------------------------------
 
 function afficherPhoto() {
     fetch('http://localhost:5678/api/works')
@@ -95,3 +95,69 @@ function photoGallery(element) {
     newFigure.innerHTML = `<img src="${element.imageUrl}" alt="${element.title}" crossorigin="anonymous" ">
     <figcaption>${element.title}</figcaption>`
 };
+
+//
+
+function photoModal(element) {
+  let figure = document.createElement("figure");
+  let newFigureModal = document
+        .querySelector(".modal__gallery")
+        .appendChild(figure);
+      newFigureModal.classList.add("modal__figure");
+      newFigureModal.innerHTML = `<i class="direction fa-solid fa-arrows-up-down-left-right" style="display: none;"></i>
+          <i class=" trash fa-solid fa-trash-can" id="${element.id}"></i><img src="${element.imageUrl}" alt="${element.title}" crossorigin="anonymous">
+          <figcaption>éditer</figcaption>`;
+}
+// ------------------------------------------------------------------------------------------
+
+// Apparition et disparition des modales
+
+function ouvrirModal(modalId) {
+  const modal = document.querySelector(modalId);
+  modal.style.display = null;
+  modal.setAttribute('aria-modal', 'true');
+}
+
+function fermerModal() {
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => 
+    modal.style.display = 'none';
+    modal.setAttribute('aria-modal', 'false');
+  });
+  document.getElementById('photo-submit').reset();
+  chosenImage.setAttribute('src', '');
+  titleValue = null
+  btnValue = null;
+  imageSelected = null;
+  document.querySelector('.label-file').removeAttribute("style");
+}
+
+function eventPropagation(modal) {
+  modal
+    .querySelector('.js-modal-stop')
+    .addEventListener('click', stopPropagation);
+  modal.addEventListener('click', fermerModal);
+
+
+function stopPropagation(event) {
+  event.stopPropagation();
+}
+
+document.querySelector('.js-modal').addEventListener('click', function(event) {
+  event.preventDefault();
+  ouvrirModal('.modal');
+});
+
+document.querySelector('.js-modal-Form').addEventListener('click', function(event) {
+  event.preventDefault();
+  fermerModal();
+  
+});
+
+const closeModalButtons = document.querySelectorAll('.js-close-modal');
+closeModalButtons.forEach(button => {
+  button.addEventListener('click', function(event) {
+    event.preventDefault();
+    fermerModal();
+
+
