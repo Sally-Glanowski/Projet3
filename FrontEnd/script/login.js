@@ -1,4 +1,3 @@
-
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const error = document.getElementById("error");
@@ -11,7 +10,6 @@ form.addEventListener("submit", function (e) {
   //recupere les inputs
   const information = new FormData(form);
   const payload = new URLSearchParams(information);
-
 
 
   fetch("http://localhost:5678/api/users/login", {
@@ -37,12 +35,10 @@ form.addEventListener("submit", function (e) {
     
     error.innerText=""
   }
-  setTimeout(msgdelet ,10000); 
+  setTimeout(msgdelet ,20000); 
  
-
 
       }
     })
 
     .catch((err) => console.log(err));
-});

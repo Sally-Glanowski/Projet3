@@ -93,4 +93,5 @@ function photoGallery(element) {
     figure.setAttribute('id', `figure-${element.id}`)
      let newFigure = document.querySelector(".gallery").appendChild(figure);
     newFigure.innerHTML = `<img src="${element.imageUrl}" alt="${element.title}" crossorigin="anonymous" ">
-    <figcaption>${element.title}</figcaption>`;
+    <figcaption>${element.title}</figcaption>`
+};
