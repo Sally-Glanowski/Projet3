@@ -116,17 +116,18 @@ function ouvrirModal(modalId) {
   const modal = document.querySelector(modalId);
   modal.style.display = null;
   modal.setAttribute('aria-modal', 'true');
+  eventPropagation(modal);
 }
 
 function fermerModal() {
   const modals = document.querySelectorAll('.modal');
-  modals.forEach(modal => 
+  modals.forEach(modal => {
     modal.style.display = 'none';
     modal.setAttribute('aria-modal', 'false');
   });
   document.getElementById('photo-submit').reset();
   chosenImage.setAttribute('src', '');
-  titleValue = null
+  titleValue = null;
   btnValue = null;
   imageSelected = null;
   document.querySelector('.label-file').removeAttribute("style");
@@ -137,7 +138,7 @@ function eventPropagation(modal) {
     .querySelector('.js-modal-stop')
     .addEventListener('click', stopPropagation);
   modal.addEventListener('click', fermerModal);
-
+}
 
 function stopPropagation(event) {
   event.stopPropagation();
@@ -151,7 +152,7 @@ document.querySelector('.js-modal').addEventListener('click', function(event) {
 document.querySelector('.js-modal-Form').addEventListener('click', function(event) {
   event.preventDefault();
   fermerModal();
-  
+  ouvrirModal('#modal-Form');
 });
 
 const closeModalButtons = document.querySelectorAll('.js-close-modal');
@@ -159,5 +160,5 @@ closeModalButtons.forEach(button => {
   button.addEventListener('click', function(event) {
     event.preventDefault();
     fermerModal();
-
-
+  });
+};
