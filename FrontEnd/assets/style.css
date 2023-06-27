@@ -332,6 +332,7 @@ footer nav ul {
 
 .modal__gallery {
     display: flex;
+	position:relative;
     flex-wrap: wrap;
     width: 100%;
     margin-left: 0.5rem;
@@ -351,7 +352,7 @@ footer nav ul {
 }
 
 .modal__figure {
-    width: 25%;
+    width: 18%;
     position: relative;
     margin-bottom: 1rem;
 }
@@ -365,7 +366,6 @@ footer nav ul {
     border-radius: 2px;
     border: 1px;
     cursor: pointer;
-
 }
 
 .trash {
