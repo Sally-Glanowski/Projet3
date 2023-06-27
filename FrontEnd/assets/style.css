@@ -423,6 +423,7 @@ footer nav ul {
 }
 
 .modal__body::before {
+	content:""
     position: absolute;
     bottom: 80px;
     width: 100%;
@@ -438,3 +439,4 @@ footer nav ul {
     align-items: center;
     justify-content: center;
     border-radius: 3px ;
+}
