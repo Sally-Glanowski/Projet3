@@ -27,11 +27,11 @@ function filtrerPhotos(e) {
       img.classList.remove('img-shrink');
       img.classList.add('img-expand')
 
-    //   va chercher les donné des images et des boutons 
+    //   va chercher les données des images et des boutons 
       const imgType = parseInt(img.dataset.img);
       const btnType = parseInt(e.target.dataset.btn);
     
-    //   si la donné du bouton ne correspond pas la donné image applique la classe shrink
+    //   si la donnée du bouton ne correspond pas la donnée image, applique la classe shrink
       if(imgType!== btnType) {
         img.classList.remove('img-expand');
         img.classList.add('img-shrink');
@@ -78,7 +78,6 @@ function afficherPhoto() {
         document.querySelectorAll('.trash').forEach(element => {
           element.addEventListener('click', deleteImg); 
         });
-        
     })
 }
 afficherPhoto()
@@ -93,13 +92,14 @@ function photoGallery(element) {
     figure.setAttribute('id', `figure-${element.id}`)
      let newFigure = document.querySelector(".gallery").appendChild(figure);
     newFigure.innerHTML = `<img src="${element.imageUrl}" alt="${element.title}" crossorigin="anonymous" ">
-    <figcaption>${element.title}</figcaption>`
-};
+    <figcaption>${element.title}</figcaption>`;
+}
 
 //
 
 function photoModal(element) {
   let figure = document.createElement("figure");
+  figure.setAttribute('id', `figure-${element.id}`);
   let newFigureModal = document
         .querySelector(".modal__gallery")
         .appendChild(figure);
@@ -161,4 +161,128 @@ closeModalButtons.forEach(button => {
     event.preventDefault();
     fermerModal();
   });
-};
+});
+
+
+document.querySelector('.backward').addEventListener('click', function(event) {
+  event.preventDefault();
+  fermerModal();
+  ouvrirModal('.modal');
+});
+
+document.querySelector('.js-modal-stop').addEventListener('click', function(event) {
+  if (event.target === this) {
+    fermerModal();
+  }
+});
+
+
+
+// ---------------------------------------------------------------------------------------------------
+
+// supression de l'image
+let galleryModal = document.querySelector('.modal__gallery');
+
+function deleteImg(e) {
+let id = e.target.id;
+let figureModal = galleryModal.querySelector(`#figure-${id}`);
+console.log(figureModal)
+figureModal.remove()
+let figure = gallery.querySelector(`#figure-${id}`);
+console.log(figure)
+figure.remove()
+
+fetch("http://localhost:5678/api/works/" + id, {
+  method: "DELETE",
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+}
+.then(res => {
+  if (res.ok) {
+    return res.json();
+  }
+  throw new Error(res.statusText);
+})
+
+.then(data => {
+  afficherPhoto()
+})
+.catch((err) => {})
+
+
+// Gestion ajout de l'image
+
+let photoForm = document.getElementById('photo-submit');
+const submitButton = photoFormquerySelector('input[type^="sub"]');
+let btnValue = null;
+let titleValue= null;
+document.getElementById('category').addEventListener('change', (e) => {
+titleValue = document.getElementById('name').value;
+btnValue = e.target.options[e.target.selectedIndex].getAttribute('data-btn');
+})
+
+let uploadButton = document.getElementById('upload-button');
+let chosenImage = document.getElementById('chosen-image');
+let fileName = document.getElementById('file-name');
+
+let imageSelected = null;
+
+uploadButton.onchange = () => {
+let reader = new FileReader(); 
+reader.readAsDataURL(uploadButton.files[0]);
+imageSelected = uploadButton.files[0]
+reader.onload = () => {
+    chosenImage.setAttribute('src',reader.result)
+}
+let labelClass =ocument.querySelector('.label-file');
+labelClass.style.display = 'none';
+}
+
+photoForm.addEventListener("submit", function(e){
+e.preventDefault();
+if (!titleValue || !btnValue ) {
+  document.querySelector('.error-message').innerHTML ="Vous devez remplir tous les champs du formulaire"
+  // console.error("Vous devez remplir tous les champs du formulaire");
+  return;
+} else {
+  document.querySelector('.error-message').innerHTML = ""
+}
+
+let formData = new FormData();
+formData.append("image", imageSelected)
+formData.append("title", titleValue )
+formData.append('category', btnValue)
+fetch("http://localhost:5678/api/works", {
+  method: "POST",
+  headers: {
+    accept: "application/json",
+    Authorization: "Bearer " + token 
+  },
+  body: formData,
+})
+.then(res => res.json())
+.then(data => {
+  afficherPhoto()
+})
+.catch((err) => {})
+fermerModal();
+})
+
+// -------------- Gestion login et logout -----------
+
+if(localStorage.getItem("token")) {
+  document.querySelector('.login__btn').innerText = "logout"
+  const modalOpener = document.querySelector(".modal__link");
+  modalOpener.style.display = null;
+  const editionMode = document.querySelector(".edition-mode__container");
+  
+  let categoryButtons = document.querySelector('.buttons');
+  categoryButtons.style.display = "none"
+  if(document.querySelector('.login__btn').innerText === "logout") {
+    document.querySelector('.login__btn').addEventListener('click', () => {
+      localStorage.clear()
+      window.location.href = "./assets/pages/index.html"
+    })
+  }
+}
