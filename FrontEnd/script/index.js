@@ -176,13 +176,17 @@ document.querySelector('.js-modal-stop').addEventListener('click', function(even
   }
 });
 
-
+document.addEventListener('keydown', function(event) {
+  if (event.keyCode === 27) { //ferme les modales si la touche esc est enfoncée
+    fermerModal();
+  }
+});
 
 // ---------------------------------------------------------------------------------------------------
 
 // supression de l'image
 let galleryModal = document.querySelector('.modal__gallery');
-
+let gallery = document.querySelector('.gallery');
 function deleteImg(e) {
 let id = e.target.id;
 let figureModal = galleryModal.querySelector(`#figure-${id}`);
@@ -197,7 +201,7 @@ fetch("http://localhost:5678/api/works/" + id, {
   headers: {
     Authorization: `Bearer ${token}`
   }
-}
+})
 .then(res => {
   if (res.ok) {
     return res.json();
@@ -208,13 +212,13 @@ fetch("http://localhost:5678/api/works/" + id, {
 .then(data => {
   afficherPhoto()
 })
-.catch((err) => {})))
-
+.catch((err) => {})
+}
 
 // Gestion ajout de l'image
 
 let photoForm = document.getElementById('photo-submit');
-const submitButton = photoFormquerySelector('input[type^="sub"]');
+const submitButton = photoForm.querySelector('input[type^="sub"]');
 let btnValue = null;
 let titleValue= null;
 document.getElementById('category').addEventListener('change', (e) => {
@@ -235,13 +239,13 @@ imageSelected = uploadButton.files[0]
 reader.onload = () => {
     chosenImage.setAttribute('src',reader.result)
 }
-let labelClass =ocument.querySelector('.label-file');
+let labelClass = document.querySelector('.label-file');
 labelClass.style.display = 'none';
 }
 
 photoForm.addEventListener("submit", function(e){
 e.preventDefault();
-if (!titleValue || !btnValue ) {
+if (!titleValue || !btnValue || !imageSelected) {
   document.querySelector('.error-message').innerHTML ="Vous devez remplir tous les champs du formulaire"
   // console.error("Vous devez remplir tous les champs du formulaire");
   return;
@@ -276,7 +280,7 @@ if(localStorage.getItem("token")) {
   const modalOpener = document.querySelector(".modal__link");
   modalOpener.style.display = null;
   const editionMode = document.querySelector(".edition-mode__container");
-  
+  editionMode.style.display = null;
   let categoryButtons = document.querySelector('.buttons');
   categoryButtons.style.display = "none"
   if(document.querySelector('.login__btn').innerText === "logout") {
@@ -284,5 +288,4 @@ if(localStorage.getItem("token")) {
       localStorage.clear()
       window.location.href = "./assets/pages/index.html"
     })
-  }
-}
+  }}
