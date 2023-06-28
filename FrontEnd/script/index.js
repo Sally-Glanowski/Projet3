@@ -208,7 +208,7 @@ fetch("http://localhost:5678/api/works/" + id, {
 .then(data => {
   afficherPhoto()
 })
-.catch((err) => {})
+.catch((err) => {})))
 
 
 // Gestion ajout de l'image
