@@ -61,7 +61,7 @@ function activerFiltre() {
 // ------- Affiche les photos dans la gallerie ------------------------------
 
 function afficherPhoto() {
-    fetch('http://localhost:5678/api/works')
+    fetch('http://localhost:5678/api/works') //appel de l'API pour récupérer les travaux
     .then(res => res.json())
     .then(data => {
         document.querySelector('.gallery').innerHTML = '';
@@ -110,8 +110,10 @@ function photoModal(element) {
 }
 // ------------------------------------------------------------------------------------------
 
-// Apparition et disparition des modales
+// APPARITION / DISPARITION DES MODALS
 
+
+// fonction ouvrir et fermer qui vont attribuer des propriété aux modales lorsuq'elles sont ouvertes ou fermées
 function ouvrirModal(modalId) {
   const modal = document.querySelector(modalId);
   modal.style.display = null;
@@ -133,6 +135,7 @@ function fermerModal() {
   document.querySelector('.label-file').removeAttribute("style");
 }
 
+//permet de fermer la modal lorsqu'on clic à l'extérieur en utilisant la methode stop propagation
 function eventPropagation(modal) {
   modal
     .querySelector('.js-modal-stop')
@@ -149,26 +152,30 @@ document.querySelector('.js-modal').addEventListener('click', function(event) {
   ouvrirModal('.modal');
 });
 
+//au clic sur le bouton "ajouter une photo" qui a la class (.js-modal-form), 
+//fermeture de la première modal et ouverture de la deuxième
 document.querySelector('.js-modal-Form').addEventListener('click', function(event) {
   event.preventDefault();
   fermerModal();
   ouvrirModal('#modal-Form');
 });
 
+//fermeture des modals avec le clic sur la croix
 const closeModalButtons = document.querySelectorAll('.js-close-modal');
-closeModalButtons.forEach(button => {
+closeModalButtons.forEach(button => {  //itère sur chaque croix avec la méthode forEach
   button.addEventListener('click', function(event) {
     event.preventDefault();
     fermerModal();
   });
 });
 
-
+//icone retour qui ferme la 2eme modal et ouvre la 1ere
 document.querySelector('.backward').addEventListener('click', function(event) {
   event.preventDefault();
   fermerModal();
   ouvrirModal('.modal');
 });
+
 
 document.querySelector('.js-modal-stop').addEventListener('click', function(event) {
   if (event.target === this) {
@@ -184,10 +191,12 @@ document.addEventListener('keydown', function(event) {
 
 // ---------------------------------------------------------------------------------------------------
 
-// supression de l'image
+// SUPPRESSION DES IMAGES
+
 let galleryModal = document.querySelector('.modal__gallery');
 let gallery = document.querySelector('.gallery');
-function deleteImg(e) {
+
+function deleteImg(e) {  //réponse à l'écouteur d'évènement créé dans la fonction afficherPhoto
 let id = e.target.id;
 let figureModal = galleryModal.querySelector(`#figure-${id}`);
 console.log(figureModal)
@@ -196,7 +205,7 @@ let figure = gallery.querySelector(`#figure-${id}`);
 console.log(figure)
 figure.remove()
 
-fetch("http://localhost:5678/api/works/" + id, {
+fetch("http://localhost:5678/api/works/" + id, { //autorisation pour la suppression des images
   method: "DELETE",
   headers: {
     Authorization: `Bearer ${token}`
@@ -215,7 +224,7 @@ fetch("http://localhost:5678/api/works/" + id, {
 .catch((err) => {})
 }
 
-// Gestion ajout de l'image
+// AJOUT DES IMAGES
 
 let photoForm = document.getElementById('photo-submit');
 const submitButton = photoForm.querySelector('input[type^="sub"]');
@@ -232,15 +241,16 @@ let fileName = document.getElementById('file-name');
 
 let imageSelected = null;
 
-uploadButton.onchange = () => {
-let reader = new FileReader(); 
-reader.readAsDataURL(uploadButton.files[0]);
-imageSelected = uploadButton.files[0]
-reader.onload = () => {
-    chosenImage.setAttribute('src',reader.result)
+uploadButton.onchange = () => {  // Lorsque le bouton de sélection de fichier est modifié
+let reader = new FileReader();   // Création  d'un nouvel objet FileReader
+reader.readAsDataURL(uploadButton.files[0]);  // Lit le contenu du premier fichier sélectionné en tant qu'URL de données
+
+imageSelected = uploadButton.files[0]// Stocke le premier fichier sélectionné dans une variable imageSelected
+reader.onload = () => {   //Lorsque le contenu du fichier est chargé avec succès
+    chosenImage.setAttribute('src',reader.result)  // Attribue l'URL de données du contenu du fichier à l'attribut src de l'élément chosenImage
 }
-let labelClass = document.querySelector('.label-file');
-labelClass.style.display = 'none';
+let labelClass = document.querySelector('.label-file'); // Sélectionne l'élément ayant la classe CSS .label-file
+labelClass.style.display = 'none';  //
 }
 
 photoForm.addEventListener("submit", function(e){
@@ -253,7 +263,7 @@ if (!titleValue || !btnValue || !imageSelected) {
   document.querySelector('.error-message').innerHTML = ""
 }
 
-let formData = new FormData();
+let formData = new FormData();  //envoyer les nouvelles photos vers l'API
 formData.append("image", imageSelected)
 formData.append("title", titleValue )
 formData.append('category', btnValue)
@@ -273,7 +283,7 @@ fetch("http://localhost:5678/api/works", {
 fermerModal();
 })
 
-// -------------- Gestion login et logout -----------
+// -------------- LOGIN ET LOGOUT-----------
 
 if(localStorage.getItem("token")) {
   document.querySelector('.login__btn').innerText = "logout"
@@ -286,6 +296,6 @@ if(localStorage.getItem("token")) {
   if(document.querySelector('.login__btn').innerText === "logout") {
     document.querySelector('.login__btn').addEventListener('click', () => {
       localStorage.clear()
-      window.location.href = "./assets/pages/index.html"
+      window.location.href = "./pages/login.html"
     })
   }}
