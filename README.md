@@ -4,6 +4,7 @@ site d'architecte Sophie Bluel
 site de l'architecte : http://127.0.0.1:5501/FrontEnd/index.html
 
 Spécifications fonctionnelles:
+
 Creer dynamiquement la galerie photo du portfolio.
 Pouvoir filtrer les travaux par categorie.
 Les boutons de filtres doivent changer seulement d’apparence l'orsqu'ils sont actifs.
